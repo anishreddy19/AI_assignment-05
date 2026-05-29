@@ -1,101 +1,217 @@
 # AI Assignment 5
 
-# Roll no: SE24UCSE083
-# NAME : B.SAI ANISH REDDY
-
-## Introduction
-
-This repository contains implementations of several important Artificial Intelligence concepts and techniques. The assignment is divided into four major components:
-
-* Game Tree Search Algorithms
-* AI-Based Travel Recommendation System
-* Knowledge Graph Construction and Querying
-* Bayesian Network Inference
-
-Each module demonstrates a different aspect of AI, ranging from decision-making and search to knowledge representation and probabilistic reasoning.
+**Name:** B.SAI ANISH REDDY
+**Roll no:** SE24UCSE083 
 
 ---
 
-# 1. Game Tree Search Algorithms
+# Overview
 
-This module implements classical AI search algorithms for decision-making in two-player games such as Tic-Tac-Toe.
+This repository contains implementations of four important Artificial Intelligence concepts:
 
-## Algorithms Implemented
+1. Search Algorithms
+2. AI-Based Restaurant Recommendation System
+3. Knowledge Graph Construction and Querying
+4. Bayesian Network Inference
 
-### Minimax Algorithm
-
-Minimax explores the complete game tree and chooses the move that maximizes the player's chances of winning while assuming the opponent plays optimally.
-
-### Alpha-Beta Pruning
-
-Alpha-Beta Pruning improves Minimax by eliminating branches that cannot affect the final decision, significantly reducing the search space.
-
-### Heuristic Alpha-Beta Search
-
-A depth-limited version of Alpha-Beta search that uses a heuristic evaluation function when the search depth limit is reached.
-
-### Monte Carlo Tree Search (MCTS)
-
-MCTS evaluates moves through repeated random simulations and selects moves based on statistical outcomes.
-
-## Features
-
-* Optimal move selection
-* Search tree pruning
-* Heuristic evaluation
-* Simulation-based decision making
+The project demonstrates decision-making, recommendation systems, knowledge representation, and probabilistic reasoning using Python.
 
 ---
 
-# 2. AI-Based Travel Recommendation System
+# Search Algorithms
 
-The Travel Recommendation System suggests travel destinations based on user preferences such as budget, travel style, and interests.
+All search algorithms are implemented and tested using a Tic-Tac-Toe game environment.
 
-## Available Destinations
+## tic_tac_toe.py
 
-* Goa
-* Manali
-* Jaipur
-* Rishikesh
+Provides the shared Tic-Tac-Toe game engine used by all search algorithms.
 
-## Recommendation Factors
+Features:
 
-* Budget
-* Travel Type
+* Make moves
+* Undo moves
+* Check winner
+* Check draw state
+* Generate available moves
+
+---
+
+## minimax.py
+
+Implements the Minimax algorithm.
+
+The algorithm explores the complete game tree and evaluates terminal states:
+
+* X Win → +1
+* O Win → -1
+* Draw → 0
+
+The maximizing player selects the highest score while the minimizing player selects the lowest score.
+
+---
+
+## alphabeta.py
+
+Implements Alpha-Beta Pruning.
+
+Alpha-Beta improves Minimax by eliminating branches that cannot affect the final outcome.
+
+Features:
+
+* Faster than standard Minimax
+* Produces identical optimal moves
+* Reduces the number of nodes evaluated
+
+---
+
+## heuristic_ab.py
+
+Implements Heuristic Alpha-Beta Search.
+
+A depth limit is introduced and board positions are evaluated using a heuristic function.
+
+### Heuristic Evaluation
+
+* Two X marks and one empty cell → +10
+* Two O marks and one empty cell → -10
+* One X mark and two empty cells → +1
+* One O mark and two empty cells → -1
+
+This allows faster decision-making in larger search spaces.
+
+---
+
+## mcts.py
+
+Implements Monte Carlo Tree Search (MCTS).
+
+The algorithm performs repeated simulations and selects moves based on statistical outcomes.
+
+### Four Phases
+
+1. Selection
+2. Expansion
+3. Simulation
+4. Backpropagation
+
+The move with the highest visit count is selected as the best move.
+
+---
+
+## Test Cases
+
+The algorithms are tested on several Tic-Tac-Toe board configurations.
+
+### Test 1 – Winning Move
+
+X has an immediate winning move.
+
+### Test 2 – Blocking Move
+
+X must block O from winning.
+
+### Test 3 – Empty Board
+
+Optimal opening move is selected.
+
+### Sample Output
+
+```text
+TEST CASE 1: Winning Move
+Expected Move: 2
+
+Minimax        → Move: 2 | PASS
+Alpha-Beta     → Move: 2 | PASS
+Heuristic AB   → Move: 2 | PASS
+MCTS           → Move: 2 | PASS
+```
+
+---
+
+# AI-Based Restaurant Recommendation System
+
+**File:** `restaurant_recommendation.py`
+
+A rule-based recommendation system that suggests restaurants based on user preferences such as budget, cuisine type, and dining interests.
+
+## Available Restaurants
+
+* Spice Garden
+* Ocean Delight
+* Pizza Hub
+* Dragon Palace
+
+## User Inputs
+
+* Budget (Low / Medium / High)
+* Cuisine Type
 * Personal Interests
 
-## Travel Types
+## Cuisine Types
 
-* Beach
-* Hill Station
-* Historical
-* Adventure
+* Indian
+* Italian
+* Chinese
+* Seafood
+
+## Recommendation Scoring
+
+| Criterion              | Score |
+| ---------------------- | ----- |
+| Budget Match           | +3    |
+| Cuisine Type Match     | +2    |
+| Each Matching Interest | +1    |
+
+The restaurant with the highest score is selected.
+
+## Generated Recommendation
+
+For the recommended restaurant, the system provides:
+
+* Restaurant Name
+* Cuisine Type
+* Estimated Cost
+* Recommended Dishes
+
+### Example
+
+Input:
+
+```text
+Budget: Medium
+Cuisine Type: Italian
+Interests: Pizza, Friends
+```
+
+Output:
+
+```text
+Top Recommendation: Pizza Hub
+
+Estimated Cost: ₹700
+
+Must Try Dishes:
+- Margherita Pizza
+- Pasta Alfredo
+- Garlic Bread
+```
 
 ## Features
 
-* Personalized destination recommendations
-* Destination scoring mechanism
-* Travel itinerary generation
-* Activity suggestions
-* Food recommendations
+* Personalized restaurant recommendations
+* Budget-aware suggestions
+* Cuisine preference matching
+* Interest-based scoring
+* Recommended dishes
 * Cost estimation
-
-## Example Output
-
-The system recommends destinations ranked by suitability score and generates a personalized travel plan including:
-
-* Destination
-* Duration
-* Estimated Cost
-* Activities
-* Local Foods
-* Matching Interests
 
 ---
 
-# 3. Knowledge Graph Construction and Querying
+# Knowledge Graph
 
-This module demonstrates knowledge representation using a Movie Recommendation Knowledge Graph.
+**File:** `knowledge_graph.py`
+
+Builds and visualizes a Movie Recommendation Knowledge Graph using NetworkX.
 
 ## Entities
 
@@ -135,23 +251,25 @@ This module demonstrates knowledge representation using a Movie Recommendation K
 * The Dark Knight belongs to Action
 * Avengers: Endgame is directed by Anthony Russo
 
-## Queries Supported
+## Supported Queries
 
-* Movies watched by a user
-* Movies directed by a specific director
-* Movies belonging to a particular genre
+* Movies watched by the user
+* Movies directed by Christopher Nolan
+* Movies belonging to Science Fiction
 * Director information for a movie
 * Genre information for a movie
 
 ## Visualization
 
-The knowledge graph is visualized using NetworkX and Matplotlib, allowing easy exploration of entities and relationships.
+The graph is visualized using NetworkX and Matplotlib to show entities and relationships.
 
 ---
 
-# 4. Bayesian Network Inference
+# Bayesian Network
 
-The Bayesian Network models probabilistic relationships involved in recommendation systems.
+**File:** `bayesian_network.py`
+
+Implements a Bayesian Network for recommendation inference.
 
 ## Variables
 
@@ -160,26 +278,39 @@ The Bayesian Network models probabilistic relationships involved in recommendati
 * Popularity
 * Recommendation
 
-## Dependencies
+## Network Structure
 
-* User Preference → Recommendation
-* Genre → Recommendation
-* Popularity → Recommendation
+```text
+User Preference ──► Recommendation
+Genre ───────────► Recommendation
+Popularity ──────► Recommendation
+```
 
 ## Inference Process
 
 1. Collect user preferences.
-2. Evaluate relevant evidence.
+2. Evaluate available evidence.
 3. Compute conditional probabilities.
-4. Generate recommendation probabilities.
-5. Select the most likely recommendations.
+4. Estimate recommendation likelihood.
+5. Generate recommendation outcomes.
 
 ## Advantages
 
-* Handles uncertainty effectively
+* Handles uncertainty
 * Supports probabilistic reasoning
-* Provides personalized recommendations
-* Extensible and scalable
+* Produces personalized recommendations
+* Easily extensible
+
+### Example Query
+
+Given:
+
+* User likes Science Fiction movies
+* Popularity is High
+
+Inference:
+
+The Bayesian Network calculates the probability that a movie should be recommended to the user.
 
 ---
 
@@ -189,6 +320,17 @@ The Bayesian Network models probabilistic relationships involved in recommendati
 * NetworkX
 * Matplotlib
 * NumPy
+* pgmpy
+
+---
+
+# Installation
+
+Install required libraries:
+
+```bash
+pip install networkx matplotlib pgmpy numpy
+```
 
 ---
 
@@ -197,38 +339,37 @@ The Bayesian Network models probabilistic relationships involved in recommendati
 ```text
 AI_Assignment_5/
 │
+├── tic_tac_toe.py
 ├── minimax.py
 ├── alphabeta.py
 ├── heuristic_ab.py
 ├── mcts.py
-├── travel_planner.py
+├── restaurant_recommendation.py
 ├── knowledge_graph.py
 ├── bayesian_network.py
-├── images/
-│   └── movie_knowledge_graph.png
-│
-└── README.md
+├── README.md
+└── .gitignore
 ```
 
 ---
 
 # Learning Outcomes
 
-Through this assignment, the following AI concepts were explored:
+This assignment demonstrates:
 
 * Adversarial Search
-* Game Tree Algorithms
+* Minimax Algorithm
 * Alpha-Beta Pruning
 * Heuristic Search
-* Monte Carlo Methods
+* Monte Carlo Tree Search
+* Recommendation Systems
 * Knowledge Representation
 * Knowledge Graphs
-* Recommendation Systems
-* Bayesian Reasoning
+* Bayesian Networks
 * Probabilistic Inference
 
 ---
 
 # Conclusion
 
-This project provides hands-on implementation of fundamental Artificial Intelligence techniques. It demonstrates how AI methods can be applied to search problems, recommendation systems, knowledge representation, and probabilistic decision-making, offering a comprehensive understanding of core AI concepts.
+This project showcases the practical implementation of fundamental Artificial Intelligence techniques. It combines search algorithms, recommendation systems, knowledge graphs, and Bayesian inference to demonstrate how AI can be used for decision-making, information representation, and intelligent recommendations.
